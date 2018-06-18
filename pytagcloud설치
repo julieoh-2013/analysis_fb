@@ -1,0 +1,32 @@
+0. pygame 설치
+   pip insatall pygame
+
+   simplejson 설치
+   - simplejson download (압축풀고 들어가서)
+   - python setup.py install
+
+1. pytagcloud 설치
+    pip install pytagcloud
+
+2. pytagcloud 한글처리 (한글깨짐처리)
+  1) python설치디렉토리/venv/Lib/site-packages/pytgcloud/fonts/...ttf 한글폰트 복사
+    (malgun.ttf)  C:\Windows\Fonts에서 가져다 붙힘
+  2) python설치디렉토리/venv/Lib/site-packages/pytgcloud/fonts/font.json 파일수정
+    ,
+	{
+        "name": "Malgun",
+        "ttf": "malgun.ttf",
+        "web": "http://fonts.googleapis.com/css?family=Malgun"
+    }
+    추가
+
+
+
+
+
+
+
+
+
+
+
