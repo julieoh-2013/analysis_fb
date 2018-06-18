@@ -1,11 +1,11 @@
-import os
+#import os
 import json
 from .api import api
 from datetime import datetime, timedelta
 
 
 
-RESULT_DIRECTORY = '__results__/crawling'
+#RESULT_DIRECTORY = '__results__/crawling'
 #수집된 데이터 가공 메소드 생성
 def preprocess_post(post):
     # 공유수 shares-count
@@ -33,12 +33,27 @@ def preprocess_post(post):
     # time-> string형으로 변환
     post['created_time'] = kst.strftime('%Y-%m-%d %H:%M:%S')
 
-def crawling(pagename, since, until, fetch=True):#안주면 무조건 수집
+def crawling(pagename,
+             since,
+             until,
+             fetch=True,
+             result_directory ='',
+             access_token =''
+             ):#안주면 무조건 수집
     results = []
-    filename = '%s/%s_%s_%s.json'%(RESULT_DIRECTORY,pagename,since,until)#나중에 config로 dir명 뺄것
+    filename = '%s/%s_%s_%s.json'%(result_directory,
+                                   pagename,
+                                   since,
+                                   until
+                                   )#나중에 config로 dir명 뺄것
 
     if fetch: #fetch가 true이면 수집
-        for posts in api.fb_fetch_posts(pagename, since, until):
+        for posts in api.fb_fetch_posts(
+                                        pagename,
+                                        since,
+                                        until,
+                                        access_token=access_token
+        ):
             for post in posts:
                 preprocess_post(post)
             results += posts
@@ -54,6 +69,3 @@ def crawling(pagename, since, until, fetch=True):#안주면 무조건 수집
     
     return filename
 
-#crawler.py가 임포트될때 로딩되어 실행됨
-if os.path.exists(RESULT_DIRECTORY) is False:
-    os.makedirs(RESULT_DIRECTORY)

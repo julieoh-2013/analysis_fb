@@ -1,35 +1,46 @@
 #print('run analysis_fb...')
 #크롤러 실행
 #from collect import crawler as cw
+from config import CONFIG
 import collect
 import analyze
 import visualize
 
 #실행파일과 라이브러리파일 구분
 if __name__ =='__main__':#실행파일이면,
-
+    '''
     items = [
         {'pagename': 'jtbcnews', 'since': '2017-01-01', 'until': '2017-12-31'},
         {'pagename': 'chosun', 'since': '2017-01-01', 'until': '2017-12-31'}
     ] #어떤놈수집할까 항목저장
-
+    '''
+    items=[]
     #데이터 수집(collection)
+
+
+    for pagename in CONFIG['pagename']:
+        resultfile = collect.crawling(pagename,**CONFIG['common'] )  # 데이터는 수집않고 파일명만 가져오게
+        items.append({'pagename':pagename})
+        for item in items:
+            item['since'] = CONFIG['common']['since']
+            item['until'] = CONFIG['common']['until']
+            item['resultfile'] = resultfile
+    print('resultfile items :', items)
+    '''
     for item in items:
         resultfile = collect.crawling(**item, fetch=False)#데이터는 수집않고 파일명만 가져오게
         item['resultfile'] = resultfile
+    '''
 
-
-    #데이터 분석(analyze)
+    #데이터 분석(analyze)items.append({ 'resultfile': resultfile })
     for item in items:
         data = analyze.json_to_str(item['resultfile'], 'message')# json string으로 바꾸기
         item['count_wordfreq'] = analyze.count_wordfreq(data)
 
-
+    print('items after anal : ',items)
     #데이터 시각화(visualize)
     for item in items:
         count = item['count_wordfreq'] #count객체를 빼내서  'count_wordfreq': Counter({'빵': 28, '문재인': 27, '년': 20, '편의점': 20, '사람': 1
-
-        print('type(count) : ' , type(count))
 
         count.most_common(50)           # list(tuple) 랭킹 50위까지 순서대로
         count_m50 = dict( count.most_common(50) )  # dic 형태로 변경 : {'오늘': 126, '일': 110, '기사': 107,

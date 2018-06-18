@@ -4,7 +4,7 @@ from .web_request import json_request
 #FB API Wrapper Functions
 #fb_gen_url('https://graph.facebook.com/v3.0','jdbcnews','posts',since=20171231,until=20181231)
 
-ACCESS_TOKEN='EAACEdEose0cBAJZAkweaZAR6xvETrWZBdI5lDITZBIKGHGepqmCSMgXrEZA14uTf0nEfNRJx92Q6Xq7QqZCZCZCTpBQKnoOdWXkH38LXREdbOTFzlcnRxtBMBB4hGOzc27ZAvf9ZALXsLQZBmH6LVSukmfp6ATpRfWKovenu32BzNMVqKjyFmknHXZCFc8q6ocw5n2ubkhxfEbmm1f58sy3QVtXqth765oL80V8ZD'
+#ACCESS_TOKEN='EAACEdEose0cBAJZAkweaZAR6xvETrWZBdI5lDITZBIKGHGepqmCSMgXrEZA14uTf0nEfNRJx92Q6Xq7QqZCZCZCTpBQKnoOdWXkH38LXREdbOTFzlcnRxtBMBB4hGOzc27ZAvf9ZALXsLQZBmH6LVSukmfp6ATpRfWKovenu32BzNMVqKjyFmknHXZCFc8q6ocw5n2ubkhxfEbmm1f58sy3QVtXqth765oL80V8ZD'
 BASE_URL_FB_API="https://graph.facebook.com/v3.0"  #상수 대문자로 선언
 
 def fb_gen_url(base=BASE_URL_FB_API,
@@ -13,6 +13,8 @@ def fb_gen_url(base=BASE_URL_FB_API,
                ):
 
     url = '%s/%s/?%s' % (base, node, urlencode(params))
+
+    print('fb_gen_url url :', url)
     return url
 
 
@@ -20,22 +22,29 @@ def fb_gen_url(base=BASE_URL_FB_API,
 #https://graph.facebook.com/v3.0/240263402699918/posts/?since=...
 #jtbcnews에 대한 id값 리턴함
 
-def fb_name_to_id(pagename):
+def fb_name_to_id(pagename, access_token=''):
     url = fb_gen_url(node=pagename,
-                     access_token=ACCESS_TOKEN
+                     access_token=access_token
                      )
+    print('url', url)
     json_result = json_request(url=url)
+    print('json_result',json_result)
     return json_result.get('id') #{'name': 'JTBC 뉴스', 'id': '240263402699918'}
 
 #https://graph.facebook.com/v3.0/240263402699918/posts/?since=...
-def fb_fetch_posts(pagename, since, until):
+def fb_fetch_posts(pagename,
+                   since,
+                   until,
+                   access_token
+                   ):
     url = fb_gen_url(
-                      node=fb_name_to_id(pagename)+'/posts',
+                      node=fb_name_to_id(pagename, access_token=access_token)+'/posts',
+                      access_token=access_token,
                       fields='id,message,link,name,type,shares,reactions,created_time,comments.limit(0).summary(true).limit(0).summary(true)' , #포스트에서 받아야할 데이터필드
                       since=since,
                       until = until ,
-                      limit = 50,
-                      access_token=ACCESS_TOKEN
+                      limit = 50
+
     )
 
 

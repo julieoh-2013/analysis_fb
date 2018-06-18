@@ -11,6 +11,7 @@ from collections import Counter
 '''
 
 def json_to_str(filename, key): #(파일명, 파일에서 값을 가져올 키명 message)
+    print('filename', filename)
     jsonfile = open(filename, 'r', encoding='utf-8')
     json_string = jsonfile.read() #json string이라는 메모리로 이미 파일데이터 퍼옴
     jsonfile.close()
@@ -25,7 +26,7 @@ def json_to_str(filename, key): #(파일명, 파일에서 값을 가져올 키�
         #분석을 위한 데이터 전처리 (공백제거 등)
         data += re.sub(r'[^\w]', '', value)  #정규식인 처음시작이 공백으로시작하는 모든문자 하나는 ''로 대체하라
         #data = ' '.join((data, (re.sub(r'[^\w]', '', value))))
-
+    print('data : ', data)
     return data
 
 def count_wordfreq(data):
