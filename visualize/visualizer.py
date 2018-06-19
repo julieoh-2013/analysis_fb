@@ -3,11 +3,11 @@ import os
 import matplotlib.pyplot as plt
 import collections
 
-RESULT_DIRECTORY="__results__/visualization"
+#RESULT_DIRECTORY="__results__/visualization"
 
-def wordcloud(filename, wordfreq): # wordfreq:dict{'오늘': 126, '일': 110, '기사': 107, --- 50위
+def wordcloud(filename, wordfreq,result_visual_dir=''): # wordfreq:dict{'오늘': 126, '일': 110, '기사': 107, --- 50위
     taglist = pytagcloud.make_tags(wordfreq.items(), maxsize=80)  #taglist :  [{'color': (130, 70, 56), 'size': 96, 'tag': '빵'}, {'color': (157, 13, 160), 'size': 93, 'tag': '문재인'},
-    save_filename = '%s/wordcloud_%s.jpg' % (RESULT_DIRECTORY, filename)
+    save_filename = '%s/wordcloud_%s.jpg' % (result_visual_dir, filename)
     pytagcloud.create_tag_image(taglist,
                                 save_filename,
                                 size=(900,600),
@@ -15,7 +15,8 @@ def wordcloud(filename, wordfreq): # wordfreq:dict{'오늘': 126, '일': 110, '�
                                 rectangular=False,
                                 background=(0,0,0)
                                 )
-def graph_bar(title=None,
+def graph_bar(result_visual_dir='',
+        title=None,
               xlabel=None,
               ylabel=None,
               showgrid=False,
@@ -50,12 +51,9 @@ def graph_bar(title=None,
 
 
     if filename is not None and isinstance(filename,str):
-        save_filename= '%s/bar_%s.png' %(RESULT_DIRECTORY, filename)
+        save_filename= '%s/bar_%s.png' %(result_visual_dir, filename)
         plt.savefig(save_filename, dpi=400, bbox_inches='tight') #해상도,박스내 여백
 
     #show graph
     if showgraph:
         plt.show()
-
-if os.path.exists(RESULT_DIRECTORY) is False:
-    os.mkdir(RESULT_DIRECTORY)

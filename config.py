@@ -5,9 +5,11 @@ CONFIG={
     'common':{
         'since':'2017-01-01',
         'until':'2017-12-31',
-        'fetch':True,
+        'fetch':False,
         'result_directory' : '__results__/crawling',
+        'result_visual_dir': '__results__/visualization',
         'access_token':'EAACEdEose0cBADxIRbSS0FyklkfZBgYvG4kIMRm4dsO28DHZBnX1WFiChZCZCi676secqtnFYiwwZAiANjdfMwZAeDVNgCtAvlpBkTDZAR2CQz2NWsF2Ljzc7z0XIOhHrJL0yJOksHioAe6M6WLWZAFuCdkb4BBXmxAjZC6FeiDpvQY3VauzRMKU6i2ZByZC823rxq3NJKAyxcnBqfn9OVRMWyL'
+
     }
 }
 

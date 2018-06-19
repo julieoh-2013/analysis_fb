@@ -16,8 +16,6 @@ if __name__ =='__main__':#실행파일이면,
     '''
     items=[]
     #데이터 수집(collection)
-
-
     for pagename in CONFIG['pagename']:
         resultfile = collect.crawling(pagename,**CONFIG['common'] )  # 데이터는 수집않고 파일명만 가져오게
         items.append({'pagename':pagename})
@@ -46,7 +44,7 @@ if __name__ =='__main__':#실행파일이면,
         count_m50 = dict( count.most_common(50) )  # dic 형태로 변경 : {'오늘': 126, '일': 110, '기사': 107,
 
         filename = '%s_%s_%s' % (item['pagename'],item['since'],item['until'])
-        visualize.wordcloud(filename, count_m50)
+        visualize.wordcloud(filename, count_m50,CONFIG['common']['result_visual_dir'] )
 
         '''
         [{'color': (16, 176, 94), 'size': 92, 'tag': '오늘'},
@@ -54,6 +52,7 @@ if __name__ =='__main__':#실행파일이면,
         
         '''
         visualize.graph_bar(
+            CONFIG['common']['result_visual_dir'],
             title= '%s 빈도분석 '%(item['pagename']),
             xlabel='단어',
             ylabel='빈도수',

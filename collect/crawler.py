@@ -38,6 +38,7 @@ def crawling(pagename,
              until,
              fetch=True,
              result_directory ='',
+             result_visual_dir='',
              access_token =''
              ):#안주면 무조건 수집
     results = []
